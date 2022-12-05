@@ -1,22 +1,19 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Fact } from "./components/fact";
 
 function App() {
-  const [fact, setFact] = useState("");
-
-  function generateCatFact() {
-    axios.get("https://catfact.ninja/fact").then((response) => {
-      setFact(response.data.fact);
-    });
-  }
-  useEffect(() => {
-    generateCatFact();
-  }, []);
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
   return (
     <div className="App">
-      <h1>Cat Fact</h1>
-      <button onClick={generateCatFact}>Generate</button>
-      <p>{fact}</p>
+      <QueryClientProvider client={queryClient}>
+        <Fact />
+      </QueryClientProvider>
     </div>
   );
 }
