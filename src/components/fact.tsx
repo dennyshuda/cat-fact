@@ -4,7 +4,9 @@ import axios from "axios";
 export function Fact() {
   async function getFacts() {
     try {
-      const response = await axios.get("https://catfact.ninja/fact");
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/fact`
+      );
       return response.data;
     } catch (error) {
       console.log(error);
